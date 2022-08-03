@@ -19,7 +19,7 @@ export default function Card({course, disabled, Footer, state}) {
             alt={course.title}
           />
         </div>
-        <div className="p-8 pb-4 flex-2">
+        <div className="p-3 pb-2 flex-2">
           <div className="flex items-center">
             <div
               className="uppercase mr-2 tracking-wide text-sm text-indigo-500 font-semibold">
