@@ -17,13 +17,13 @@ export default function Navbar() {
         <nav className="relative" aria-label="Global">
           <div className="flex flex-col xs:flex-row justify-between items-center">
             <div>
-              <ActiveLink href="/" >
+              {/* <ActiveLink href="/" >
                 <a
                   className="font-medium mr-8 text-gray-500 hover:text-gray-900">
                   Home
                 </a>
-              </ActiveLink>
-              <ActiveLink href="/marketplace" >
+              </ActiveLink> */}
+              {/* <ActiveLink href="/marketplace" >
                 <a
                   className="font-medium mr-8 text-gray-500 hover:text-gray-900">
                   Marketplace
@@ -34,15 +34,15 @@ export default function Navbar() {
                   className="font-medium mr-8 text-gray-500 hover:text-gray-900">
                   Blogs
                 </a>
-              </ActiveLink>
+              </ActiveLink> */}
             </div>
             <div className="text-center">
-              <ActiveLink href="/wishlist" >
+              {/* <ActiveLink href="/wishlist" >
                 <a
                   className="font-medium sm:mr-8 mr-1 text-gray-500 hover:text-gray-900">
                   Wishlist
                 </a>
-              </ActiveLink>
+              </ActiveLink> */}
               { isLoading ?
                 <Button
                   disabled={true}
