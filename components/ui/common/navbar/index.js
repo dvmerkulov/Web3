@@ -14,15 +14,16 @@ export default function Navbar() {
   return (
     <section>
       <div className="relative pt-6 px-2">
+        <div className="italic text-wrap text-red-900">Test marketplace app based on web3/smart contract deployed to ropsten test network.</div>
         <nav className="relative" aria-label="Global">
           <div className="flex flex-col xs:flex-row justify-between items-center">
             <div>
-              {/* <ActiveLink href="/" >
+              <ActiveLink href="/" >
                 <a
                   className="font-medium mr-8 text-gray-500 hover:text-gray-900">
                   Home
                 </a>
-              </ActiveLink> */}
+              </ActiveLink>
               {/* <ActiveLink href="/marketplace" >
                 <a
                   className="font-medium mr-8 text-gray-500 hover:text-gray-900">
@@ -69,14 +70,14 @@ export default function Navbar() {
           </div>
         </nav>
       </div>
-      { account.data &&
-        !pathname.includes("/marketplace") &&
+      {/* { account.data &&
+        !pathname.includes("/") &&
         <div className="flex justify-end pt-1 sm:px-6 lg:px-8">
           <div className="text-white bg-indigo-600 rounded-md p-2">
             {account.data}
           </div>
         </div>
-      }
+      } */}
     </section>
   )
 }

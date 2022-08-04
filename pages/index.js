@@ -1,23 +1,35 @@
-
 import { CourseCard, CourseList } from "@components/ui/course"
 import { BaseLayout } from "@components/ui/layout"
 import { getAllCourses } from "@content/courses/fetcher"
 import { useOwnedCourses, useWalletInfo } from "@components/hooks/web3"
 import { Button, Loader, Message } from "@components/ui/common"
 import { OrderModal } from "@components/ui/order"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { MarketHeader } from "@components/ui/marketplace"
 import { useWeb3 } from "@components/providers"
 import { withToast } from "@utils/toast"
+import { getContractBalance } from "@utils/getContractBalance"
 
 export default function Home({courses}) {
   const { web3, contract, requireInstall } = useWeb3()
   const { hasConnectedWallet, isConnecting, account } = useWalletInfo()
   const { ownedCourses } = useOwnedCourses(courses, account.data)
-
+  const [contractBalance, setContractBalance] = useState(null)
   const [selectedCourse, setSelectedCourse] = useState(null)
   const [busyCourseId, setBusyCourseId] = useState(null)
   const [isNewPurchase, setIsNewPurchase] = useState(true)
+
+  useEffect(() => {
+
+    const loadBalance = (async () => {
+
+      const balance = await getContractBalance(web3, contract)
+      setContractBalance(balance)
+
+    })
+    web3 && contract && loadBalance()
+
+  }, [web3, contract, busyCourseId])
 
   const purchaseCourse = async (order, course) => {
     const hexCourseId = web3.utils.utf8ToHex(course.id)
@@ -29,6 +41,7 @@ export default function Home({courses}) {
     const value = web3.utils.toWei(String(order.price))
 
     setBusyCourseId(course.id)
+
     if (isNewPurchase) {
       const emailHash = web3.utils.sha3(order.email)
       const proof = web3.utils.soliditySha3(
@@ -96,7 +109,7 @@ export default function Home({courses}) {
 
   return (
     <>
-      <MarketHeader />
+      <MarketHeader contractBalance={contractBalance}/>
       <CourseList
         courses={courses}
       >
@@ -110,7 +123,7 @@ export default function Home({courses}) {
             disabled={!hasConnectedWallet}
             Footer={() => {
               if (requireInstall) {
-                return (
+                return (                  
                   <Button
                     size="sm"
                     disabled={true}
@@ -230,3 +243,7 @@ export function getStaticProps() {
 }
 
 Home.Layout = BaseLayout
+
+
+// NEXT_PUBLIC_TARGET_CHAIN_ID=1337   
+// NEXT_PUBLIC_NETWORK_ID=5777

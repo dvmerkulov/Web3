@@ -6,6 +6,7 @@ import { Button, Message } from "@components/ui/common";
 import { CourseFilter, ManagedCourseCard } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { MarketHeader } from "@components/ui/marketplace";
+import { getContractBalance } from "@utils/getContractBalance";
 import { normalizeOwnedCourse } from "@utils/normalize";
 import { withToast } from "@utils/toast";
 import { useEffect, useState } from "react";
@@ -41,6 +42,21 @@ export default function ManagedCourses() {
   const { web3, contract } = useWeb3()
   const { account } = useAdmin({redirectTo: "/marketplace"})
   const { managedCourses } = useManagedCourses(account)
+  const [contractBalance, setContractBalance] = useState(null)
+  const [busy, setBusy] = useState(null)
+
+
+  useEffect(() => {
+
+    const loadBalance = (async () => {
+
+      const balance = await getContractBalance(web3, contract)
+      setContractBalance(balance)
+
+    })
+    web3 && contract && loadBalance()
+
+  }, [web3, contract, busy])
 
   const verifyCourse = (email, {hash, proof}) => {
     if (!email) {
@@ -74,6 +90,8 @@ export default function ManagedCourses() {
       return result
     } catch(e) {
       throw new Error(e.message)
+    } finally{
+      setBusy(!busy)
     }
   }
 
@@ -164,7 +182,7 @@ export default function ManagedCourses() {
 
   return (
     <>
-      <MarketHeader />
+      <MarketHeader contractBalance={contractBalance}/>
       <CourseFilter
         onFilterSelect={(value) => setFilters({state: value})}
         onSearchSubmit={searchCourse}

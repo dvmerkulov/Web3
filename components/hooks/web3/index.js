@@ -97,3 +97,5 @@ export const useWalletInfo = () => {
     hasConnectedWallet: !!(account.data && network.isSupported)
   }
 }
+
+

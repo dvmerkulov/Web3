@@ -1,25 +1,39 @@
 
-
 import { useAccount, useOwnedCourses } from "@components/hooks/web3"
 import { Button, Message } from "@components/ui/common"
 import { OwnedCourseCard } from "@components/ui/course"
 import { BaseLayout } from "@components/ui/layout"
 import { MarketHeader } from "@components/ui/marketplace"
 import { getAllCourses } from "@content/courses/fetcher"
+import { getContractBalance } from "@utils/getContractBalance";
 import { useRouter } from "next/router"
 import Link from "next/link"
 import { useWeb3 } from "@components/providers"
+import { useEffect, useState } from "react"
 
 export default function OwnedCourses({courses}) {
   const router = useRouter()
-  const { requireInstall } = useWeb3()
+  const { web3, contract, requireInstall } = useWeb3()
   const { account } = useAccount()
   const { ownedCourses } = useOwnedCourses(courses, account.data)
+  const [contractBalance, setContractBalance] = useState(null)
+
+  useEffect(() => {
+
+    const loadBalance = (async () => {
+
+      const balance = await getContractBalance(web3, contract)
+      setContractBalance(balance)
+
+    })
+    web3 && contract && loadBalance()
+
+  }, [web3, contract])
 
   return (
     <>
-      <MarketHeader />
-      <section className="grid grid-cols-1">
+      <MarketHeader contractBalance={contractBalance}/>
+      <section>
         { ownedCourses.isEmpty &&
           <div className="w-1/2">
             <Message type="warning">

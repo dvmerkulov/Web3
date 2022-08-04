@@ -14,8 +14,8 @@ export default function Card({course, disabled, Footer, state}) {
             className={`object-cover ${disabled && "filter grayscale"}`}
             src={course.coverImage}
             layout="responsive"
-            width="200"
-            height="230"
+            width="120"
+            height="120"
             alt={course.title}
           />
         </div>
