@@ -15,8 +15,12 @@ import Image from "next/image"
 
 export default function OwnedCourseCard({children, course}) {
 
-  const textColor = TEXT_COLOR[course.state]
-  const bgColor = BG_COLOR[course.state]
+  const textColor = TEXT_COLOR[course.id]
+  const bgColor = BG_COLOR[course.id]
+
+  console.log(textColor)
+  console.log(bgColor)
+  debugger
 
   return (
     <div className="bg-white border shadow overflow-hidden sm:rounded-lg mb-3">
