@@ -1,15 +1,22 @@
 
 import Image from "next/image"
 
-const STATE_COLORS = {
-  purchased: "indigo",
-  activated: "green",
-  deactivated: "red"
-}
+ const TEXT_COLOR = {
+  purchased: "text-indigo-700",
+  activated: "text-green-700",
+  deactivated: "text-red-700",
+ }
+
+ const BG_COLOR = {
+  purchased: "bg-indigo-200",
+  activated: "bg-green-200",
+  deactivated: "bg-red-200",
+ }
 
 export default function OwnedCourseCard({children, course}) {
 
-  const stateColor = STATE_COLORS[course.state]
+  const textColor = TEXT_COLOR[course.state]
+  const bgColor = BG_COLOR[course.state]
 
   return (
     <div className="bg-white border shadow overflow-hidden sm:rounded-lg mb-3">
@@ -29,7 +36,7 @@ export default function OwnedCourseCard({children, course}) {
           <div className="px-4 py-5 sm:px-6">
             <h3 className="text-lg leading-6 font-medium text-gray-900">
               <span className="mr-2">{course.title}</span>
-              <span className={`text-xs text-${stateColor}-700 bg-${stateColor}-200 rounded-full p-2`}>
+              <span className={`text-xs ${textColor} ${bgColor} rounded-full p-2`}>
                 {course.state}
               </span>
             </h3>
