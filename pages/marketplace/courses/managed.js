@@ -40,7 +40,7 @@ export default function ManagedCourses() {
   const [ searchedCourse, setSearchedCourse ] = useState(null)
   const [ filters, setFilters ] = useState({state: "all"})
   const { web3, contract } = useWeb3()
-  const { account } = useAdmin({redirectTo: "/marketplace"})
+  const { account } = useAdmin({redirectTo: "/"})
   const { managedCourses } = useManagedCourses(account)
   const [contractBalance, setContractBalance] = useState(null)
   const [busy, setBusy] = useState(null)
